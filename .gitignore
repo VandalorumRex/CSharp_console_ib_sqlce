@@ -1,0 +1,5 @@
+/*.log
+*.exe
+*.pdb
+/consol/bin/*
+/consol/obj/*
