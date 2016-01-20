@@ -72,6 +72,7 @@ namespace consol
 			while (rdr.Read ()) {
 				cpaso_id = rdr.GetValue(0).ToString();
 				sql = "SELECT cpaso_id, oradr_adress_id FROM PRobject WHERE cpaso_id="+cpaso_id;
+				lf.WriteLine(sql);
 				scecmd.CommandText = sql;
 				DbDataReader scepr = scecmd.ExecuteReader();
 				if(scepr.Read()){
