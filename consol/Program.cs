@@ -95,22 +95,37 @@ namespace consol
             ibconn.Close();
 			sceconn.Close();
 		}
+		
+		public static void DeleteFrom(string table){
+			sceconn.Open();
+			DbCommand scecmd = sceconn.CreateCommand();
+			var lf = new LogFile("delete from "+table.Replace("<","_").Replace(">","_")+".log");
+			string sql = "DELETE FROM "+table;
+			lf.WriteLine(sql);
+			scecmd.CommandText = sql; 
+			scecmd.ExecuteNonQuery();
+			sceconn.Close();
+			Console.WriteLine(sql+" TAMAM");
+		}
 		 
 		public static void Main(string[] args)
 		{
-			Console.WriteLine("Hello World!");
+			Console.WriteLine("Выгружаем данные");
 			
 			ibconn = getConnection();
 			sceconn = new SqlCeConnection();
 			sceconn.ConnectionString = "Data Source = E://Mansur//C#//Database_1.sdf";
+			DeleteFrom("probject");
+			DeleteFrom("or_adress where oradr_adress_id<>2910");
 			string fields;
 			fields = "ORADR_ADRESS_ID, ORSTR_ID, ORADT_ID, ORART_ID, ORADR_POST_INDEX, ORADR_HOME, ORADR_NOTE_ADR, AF_ADDOBJ_ID, ADR_FULL_ADRESS, AF_ADDOBJ_GUID";
 			//= "ORADR_ADRESS_ID, ORSTR_ID, ORADT_ID, ORART_ID, ORADR_POST_INDEX, ORADR_HOME, ORADR_NOTE_ADR, ADR_FULL_ADRESS, AF_ADDOBJ_GUID";
-			ReadData("or_adress",fields,"ORADR_ADRESS_ID");
-			fields = "CPASO_ID, CPPRT_ID, CPASO_NAME, CPASO_INVENTORY_NUMBER, CPSIT_ID, CPASO_SQUARE, ORMSU_ID_SQUARE, CPINF_ID, ORADR_ADRESS_ID, CPASO_START_DATE, CPCST_AMOUNT_1, ORMSU_ID_AMOUNT_1, CPCST_DATE_AMOUNT_1, CPCST_AMOUNT_2, ORMSU_ID_AMOUNT_2, CPCST_DATE_AMOUNT_2, CPOEF_VALUE_IZ, CPOEF_VALUE_PR, ORMSU_ID_SQUARE_P, ORMSU_ID_SQUARE_V, CPINF_SV_ID, CPOBS_ID, CPASC_SERIES, CPASC_CODE, CPASC_DATE, CPINF_PASS_ID, CPINF_CAD_ID, CPASO_MARK, CPINF_RT_ID, CPOBS_RT_ID, CPASC_RT_SERIES, CPASC_RT_CODE, CPASC_RT_DATE, CPASO_CADASTRE_CODE, ORMSU_ID_AM_CADASTRE, ORMSU_ID_SQUARE_BUILDING, CPASO_PASS_NUM, CPASO_PASS_DATE, CPASO_PASS_SUB, IE_GUID, CPLCA_ID, CPCST_AMOUNT_CADASTRE";
-			ReadData("PROBJECT",fields,"CPASO_ID");
+			ReadData("or_adress",fields,"ORADR_ADRESS_ID","1=1");
+			fields = "CPASO_ID, CPPRT_ID, CPASO_NAME, CPASO_INVENTORY_NUMBER, CPSIT_ID, CPASO_SQUARE, ORMSU_ID_SQUARE, CPINF_ID, ORADR_ADRESS_ID, CPASO_START_DATE, CPCST_AMOUNT_1, ORMSU_ID_AMOUNT_1, CPCST_DATE_AMOUNT_1, CPCST_AMOUNT_2, ORMSU_ID_AMOUNT_2, CPCST_DATE_AMOUNT_2, CPOEF_VALUE_IZ, CPOEF_VALUE_PR, ORMSU_ID_SQUARE_P, ORMSU_ID_SQUARE_V, CPINF_SV_ID, CPOBS_ID, CPASC_SERIES, CPASC_CODE, CPASC_DATE, CPINF_PASS_ID, CPINF_CAD_ID, CPASO_MARK, CPINF_RT_ID, CPOBS_RT_ID, CPASC_RT_SERIES, CPASC_RT_CODE, CPASC_RT_DATE, CPASO_CADASTRE_CODE, ORMSU_ID_AM_CADASTRE, ORMSU_ID_SQUARE_BUILDING, CPASO_PASS_NUM, CPASO_PASS_DATE, CPASO_PASS_SUB, IE_GUID, CPLCA_ID, CPCST_AMOUNT_CADASTRE, CPASO_KOLVO";
+			ReadData("PROBJECT",fields,"CPASO_ID","cpprt_id<>18");
+			ReadData("PROBJECT",fields,"CPASO_ID","cpprt_id=18 and cpasc_date<='31.12.2016'");
 			Set_af_addobj_id();
-			DeleteObjects();
+			//DeleteObjects();
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);
 		}
@@ -144,10 +159,10 @@ namespace consol
 			return element;
 		}
 
-		public static void ReadData(string tablename, string felden, string id)
+		public static void ReadData(string tablename, string felden, string id, string qayda)
         {
-			var lf = new LogFile(tablename+".log");
-            string sql = "select "+ felden+ " from "+tablename;
+			var lf = new LogFile(tablename+"_"+qayda.Replace('<','_').Replace('>','_')+".log");
+            string sql = "select "+ felden+ " from "+tablename+" WHERE "+qayda;
             DbCommand ibcmd = ibconn.CreateCommand();
 			DbCommand scecmd = sceconn.CreateCommand();
             ibcmd.CommandText = sql;
