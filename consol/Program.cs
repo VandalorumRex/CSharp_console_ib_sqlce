@@ -114,7 +114,7 @@ namespace consol
 			
 			ibconn = getConnection();
 			sceconn = new SqlCeConnection();
-			sceconn.ConnectionString = "Data Source = E://Mansur//C#//Database_1.sdf";
+			sceconn.ConnectionString = "Data Source = D://Mansur//C#//Database_1.sdf";
 			DeleteFrom("probject");
 			DeleteFrom("or_adress where oradr_adress_id<>2910");
 			string fields;
@@ -122,8 +122,8 @@ namespace consol
 			//= "ORADR_ADRESS_ID, ORSTR_ID, ORADT_ID, ORART_ID, ORADR_POST_INDEX, ORADR_HOME, ORADR_NOTE_ADR, ADR_FULL_ADRESS, AF_ADDOBJ_GUID";
 			ReadData("or_adress",fields,"ORADR_ADRESS_ID","1=1");
 			fields = "CPASO_ID, CPPRT_ID, CPASO_NAME, CPASO_INVENTORY_NUMBER, CPSIT_ID, CPASO_SQUARE, ORMSU_ID_SQUARE, CPINF_ID, ORADR_ADRESS_ID, CPASO_START_DATE, CPCST_AMOUNT_1, ORMSU_ID_AMOUNT_1, CPCST_DATE_AMOUNT_1, CPCST_AMOUNT_2, ORMSU_ID_AMOUNT_2, CPCST_DATE_AMOUNT_2, CPOEF_VALUE_IZ, CPOEF_VALUE_PR, ORMSU_ID_SQUARE_P, ORMSU_ID_SQUARE_V, CPINF_SV_ID, CPOBS_ID, CPASC_SERIES, CPASC_CODE, CPASC_DATE, CPINF_PASS_ID, CPINF_CAD_ID, CPASO_MARK, CPINF_RT_ID, CPOBS_RT_ID, CPASC_RT_SERIES, CPASC_RT_CODE, CPASC_RT_DATE, CPASO_CADASTRE_CODE, ORMSU_ID_AM_CADASTRE, ORMSU_ID_SQUARE_BUILDING, CPASO_PASS_NUM, CPASO_PASS_DATE, CPASO_PASS_SUB, IE_GUID, CPLCA_ID, CPCST_AMOUNT_CADASTRE, CPASO_KOLVO";
-			ReadData("PROBJECT",fields,"CPASO_ID","cpprt_id<>18");
-			ReadData("PROBJECT",fields,"CPASO_ID","cpprt_id=18 and cpasc_date<='31.12.2016'");
+			ReadData("PROBJECT",fields,"CPASO_ID","cpprt_id<>18 and CPCST_AMOUNT_1>0");
+			ReadData("PROBJECT",fields,"CPASO_ID","cpprt_id=18 and cpasc_date<='31.12.2017' and deleted=false");
 			Set_af_addobj_id();
 			//DeleteObjects();
 			Console.Write("Press any key to continue . . . ");
@@ -178,6 +178,7 @@ namespace consol
 			int fc = rdr.FieldCount;
 			string update;
 			string element;
+			Console.WriteLine(sql);
 			while (rdr.Read ()) {
 				string id_val =rdr.GetValue (rdr.GetOrdinal (id)).ToString ();
 				scecmd.CommandText = "SELECT count(*) FROM "+tablename+ " WHERE " +id + "=" +id_val;
