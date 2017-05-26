@@ -54,6 +54,29 @@ namespace consol
 			return new string(ca);
 		}
 		
+		private static void CopyDBFile()
+        {
+			string filePath = "D://Mansur//C#//Database_1.sdf";
+            string newPath = "C://Users//Mansur//AppData//Roaming//PObject//DataBase//Database_1.sdf";
+            try {
+            	File.Delete(newPath);
+            } catch (Exception ex)
+            {
+               Console.WriteLine("Не удается удалить файл из-за исключения: " + ex.Message);
+            }
+            try
+            {
+                
+                File.Copy(filePath, newPath);
+                //DisplayFolderList(filePath);
+                Console.WriteLine("Файл скопирован");
+            }
+            catch (Exception ex)
+            {
+               Console.WriteLine("Не удается скопировать файл из-за исключения: " + ex.Message);
+            }
+        }
+		
 		public static void DeleteObjects()
 		{
 			string tablename = "PROBJECT_DELETED";
@@ -128,7 +151,7 @@ namespace consol
 			ReadData("PROBJECT",fields,"CPASO_ID","cpprt_id=18 and cpasc_date<='31.12.2017' and deleted=false");
 			
 			Set_af_addobj_id();
-			//DeleteObjects();
+			CopyDBFile();
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);
 		}
