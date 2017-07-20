@@ -56,7 +56,7 @@ namespace consol
 		
 		private static void CopyDBFile()
         {
-			string filePath = "D://Mansur//C#//Database_1.sdf";
+			string filePath = "C://Users//Mansur//Projects//gds//Database_1.sdf";
             string newPath = "C://Users//Mansur//AppData//Roaming//PObject//DataBase//Database_1.sdf";
             try {
             	File.Delete(newPath);
@@ -137,7 +137,7 @@ namespace consol
 			
 			ibconn = getConnection();
 			sceconn = new SqlCeConnection();
-			sceconn.ConnectionString = "Data Source = D://Mansur//C#//Database_1.sdf";
+			sceconn.ConnectionString = "Data Source = C://Users//Mansur//Projects//gds//Database_1.sdf";
 			DeleteFrom("probject");
 			DeleteFrom("or_adress where oradr_adress_id<>2910");
 			DeleteFrom("or_document");
