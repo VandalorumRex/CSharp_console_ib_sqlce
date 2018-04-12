@@ -56,7 +56,7 @@ namespace consol
 		
 		private static void CopyDBFile()
         {
-			string filePath = "C://Users//Mansur//Projects//gds//Database_1.sdf";
+			string filePath = "C://Projects//gds//Database_1.sdf";
             string newPath = "C://Users//Mansur//AppData//Roaming//PObject//DataBase//Database_1.sdf";
             try {
             	File.Delete(newPath);
@@ -137,7 +137,7 @@ namespace consol
 			
 			ibconn = getConnection();
 			sceconn = new SqlCeConnection();
-			sceconn.ConnectionString = "Data Source = C://Users//Mansur//Projects//gds//Database_1.sdf";
+			sceconn.ConnectionString = "Data Source = C://Projects//gds//Database_1.sdf";
 			DeleteFrom("probject");
 			DeleteFrom("or_adress where oradr_adress_id<>2910");
 			DeleteFrom("or_document");
@@ -148,7 +148,7 @@ namespace consol
 			ReadData("or_adress",fields,"ORADR_ADRESS_ID","1=1");
 			fields = "CPASO_ID, CPPRT_ID, CPASO_NAME, CPASO_INVENTORY_NUMBER, CPSIT_ID, CPASO_SQUARE, ORMSU_ID_SQUARE, CPINF_ID, ORADR_ADRESS_ID, CPASO_START_DATE, CPCST_AMOUNT_1, ORMSU_ID_AMOUNT_1, CPCST_DATE_AMOUNT_1, CPCST_AMOUNT_2, ORMSU_ID_AMOUNT_2, CPCST_DATE_AMOUNT_2, CPOEF_VALUE_IZ, CPOEF_VALUE_PR, ORMSU_ID_SQUARE_P, ORMSU_ID_SQUARE_V, CPINF_SV_ID, CPOBS_ID, CPASC_SERIES, CPASC_CODE, CPASC_DATE, CPINF_PASS_ID, CPINF_CAD_ID, CPASO_MARK, CPINF_RT_ID, CPOBS_RT_ID, CPASC_RT_SERIES, CPASC_RT_CODE, CPASC_RT_DATE, CPASO_CADASTRE_CODE, ORMSU_ID_AM_CADASTRE, ORMSU_ID_SQUARE_BUILDING, CPASO_PASS_NUM, CPASO_PASS_DATE, CPASO_PASS_SUB, IE_GUID, CPLCA_ID, CPCST_AMOUNT_CADASTRE, CPASO_KOLVO";
 			ReadData("PROBJECT",fields,"CPASO_ID","cpprt_id<>18 and deleted=false");
-			ReadData("PROBJECT",fields,"CPASO_ID","cpprt_id=18 and cpasc_date<='31.12.2017' and deleted=false");
+			ReadData("PROBJECT",fields,"CPASO_ID","cpprt_id=18 and cpasc_date<='31.12.2018' and deleted=false");
 			
 			Set_af_addobj_id();
 			CopyDBFile();
